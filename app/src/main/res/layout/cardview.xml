@@ -1,0 +1,41 @@
+<android.support.v7.widget.CardView
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:id="@+id/card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="5dp" >
+        <ImageView
+            android:id="@+id/mainPic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop" />
+
+        <TextView android:id="@+id/mainTitleText"
+            android:text="CardView标题"
+            android:textSize="29sp"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="CardView内容"
+            android:id="@+id/mainContentText"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignBottom="@+id/mainPic"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
+
