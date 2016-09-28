@@ -1,9 +1,11 @@
-package com.william.mybestmakeup;
+package com.william.mybestmakeup.mainpage;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.william.mybestmakeup.R;
 
 /** 重写的自定义ViewHolder
   * Created by william on 2016/8/16.

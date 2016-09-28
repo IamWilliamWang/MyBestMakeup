@@ -1,4 +1,4 @@
-package com.william.mybestmakeup;
+package com.william.mybestmakeup.mainpage;
 
 import android.content.Context;
 

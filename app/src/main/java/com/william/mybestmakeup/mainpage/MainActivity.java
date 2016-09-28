@@ -1,33 +1,41 @@
-package com.william.mybestmakeup;
+package com.william.mybestmakeup.mainpage;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.AlphaAnimation;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+import com.william.mybestmakeup.R;
+import com.william.mybestmakeup.secondpage.SecondActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
+import java.util.Map;
 
-
+//class MainActivty: public AppCompatActivity
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mainRecyclerView;
     private MainpageAdapter mainpageAdapter;
+    RecyclerViewHeader header;
 
     private String[] title = {"品牌","护肤","彩妆","香水"}, info = {"品牌1,品牌2,品牌3", "护肤1,护肤2,护肤3", "彩妆1,彩妆2,彩妆3", "香水1,香水2,香水3"}, imageResouce = {"ic_launcher.png", "ic_launcher.png", "ic_launcher.png", "ic_launcher.png"};
     List<Item> list = new ArrayList<>();
@@ -47,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < title.length; i++)
             list.add(new Item(title[i], info[i], imageResouce[i]));
 
-        // 设置LayoutManager
+        // 设置LayoutManager布局管理器
         mainRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         // 设置ItemAnimator
         mainRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -57,10 +65,58 @@ public class MainActivity extends AppCompatActivity {
         mainpageAdapter = new MainpageAdapter(this, list);
         // 为RecyclerView设置适配器
         mainRecyclerView.setAdapter(mainpageAdapter);
+        //增加点击事件
+        mainpageAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, String title) {
+//                Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
+                Intent secondPage = new Intent(MainActivity.this, SecondActivity.class);
+                secondPage.putExtra(SecondActivity.KEY_FROM_MAINPAGE,title);
+                startActivity(secondPage);
+            }
+        });
+
+
+        //设置头部
+        header = RecyclerViewHeader.fromXml(this, R.layout.recyclerviewheader);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mainrecyclerview);
+        // set LayoutManager for your RecyclerView
+        header.attachTo(recyclerView);
+        //把头部置顶
+        findViewById(R.id.headerlinearlayout).bringToFront();
+
+        //具有TextIuput的搜索框
+        final TextInputLayout textInputLayout= (TextInputLayout) findViewById(R.id.textInput);
+        textInputLayout.setHint("点击这里搜索：");
+        final EditText source_editText = textInputLayout.getEditText();
+        source_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                textInputLayout.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Toast.makeText(MainActivity.this,source_editText.getText(),Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+
+//        editText.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                editText.setText("");
+//            }
+//        });
 
         /*标题栏*/
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainpagetoolbar);
-        toolbar.setTitle("我爱美妆");
+        toolbar.setTitle(R.string.app_name);
         toolbar.setLogo(R.drawable.ic_launcher);
         setSupportActionBar(toolbar);
 
